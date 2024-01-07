@@ -23,7 +23,18 @@ function App() {
   } ,[]);
 
   const save=(rec)=>{
-     alert(`in App.js Save: ${JSON.stringify(rec)}`);
+    let tempCat = categories;
+     serv.postCategory(rec)
+         .then(response=>{
+           return response.data;
+         }).then(data=>{
+             tempCat.push(data);
+            setCategories(tempCat);
+            alert(`The Categories : ${JSON.stringify(categories)}`);
+         })
+         .catch(error=>{
+           console.log(`Error occurred while saving record: ${error}`);
+         }); 
   };
   const deleteRecord=(rec)=>{
 

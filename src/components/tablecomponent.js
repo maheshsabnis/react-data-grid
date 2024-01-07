@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 
 export const EditTableComponent=(props)=> {
-      
+      // The edit index to -1
      const [editIndex, setEditIndex] = useState(-1);
-     const [recData, setRecData] = useState();   
+     // The record that will be bound with the Table row
+     const [recData, setRecData] = useState(props.dataSource[0]); 
+     // Data to be displayed in the HTML Table   
      const [tableData, setTableData] = useState(props.dataSource);
+     const [operationType, setOperationType] = useState('');
      
-
      const editRow = (id)=>{
+        if(operationType !== 'New')
+            setOperationType('Edit'); 
         setEditIndex(id);
      }
      const cancelEdit = ()=>{
         setEditIndex(-1);
      }
      const saveRow=()=>{
+       alert(`The data : ${JSON.stringify(recData)}`);
         props.saveRecord(recData);
+        setOperationType('');
         setEditIndex(-1);
      };
      const deleteRow = (rec)=>{
@@ -26,8 +32,6 @@ export const EditTableComponent=(props)=> {
      const addNewRecord=()=>{
         //tableData.push({});
         setTableData([...tableData, {}]);
-        
-        console.log(JSON.stringify(tableData) + 'Length :' + tableData.length);
      };
 
      if(props.dataSource === undefined || props.dataSource.length === 0){
@@ -37,11 +41,6 @@ export const EditTableComponent=(props)=> {
             </div>
         );
      } else {
-
-     // 1. Get Columns
-    //const columns = Object.keys(props.dataSource[0]);
-    
-     // 2. The Table
      return (
         <div className="container">
             <div className="container" hidden={!props.canAdd}>
