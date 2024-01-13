@@ -23,21 +23,19 @@ function App() {
   } ,[]);
 
   const save=(rec)=>{
-    let tempCat = categories;
      serv.postCategory(rec)
          .then(response=>{
            return response.data;
          }).then(data=>{
-             tempCat.push(data);
-            setCategories(tempCat);
-            alert(`The Categories : ${JSON.stringify(categories)}`);
+            setCategories(data);
+            window.location.reload(true);
          })
          .catch(error=>{
            console.log(`Error occurred while saving record: ${error}`);
          }); 
   };
   const deleteRecord=(rec)=>{
-
+    
   };
   if(categories === undefined || categories.length === 0){
     return (
