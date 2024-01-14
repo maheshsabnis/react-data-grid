@@ -16,7 +16,7 @@ export const EditTableComponent=(props)=> {
      
      const editRow = (id)=>{       
         setEditIndex(id);
-        alert(`EditIndex in Edit Row Button ${id} and Edit Index ${editIndex}`);
+        // alert(`EditIndex in Edit Row Button ${id} and Edit Index ${editIndex}`);
         // Read Old Valeus for the Edit Clicked Rows
         let rec = props.dataSource.filter((r,i)=>{
             // alert(`In Loop ${JSON.stringify(Object.values(r)[0])} and id=${id}`);
@@ -30,12 +30,16 @@ export const EditTableComponent=(props)=> {
         setEditIndex(-1);
      }
      const saveRow=()=>{
-       alert(`The data : ${JSON.stringify(recData)}`);
-        if(operationType === 'New'){
+      // alert(`The data : ${JSON.stringify(recData)}`);
+       // if(operationType === 'New'){
+        if(editRecData === undefined){
+            alert('Save New');
             props.saveRecord(recData,'Save');
-        }else{
-            alert(`EditIndex in Save ${editIndex}`);
-            alert(`In TableComponent for Edit ${JSON.stringify(editRecData)}`);
+        } else {
+        //if(operationType === 'Edit'){
+            alert('Save Edit');
+            // alert(`EditIndex in Save ${editIndex}`);
+            // alert(`In TableComponent for Edit ${JSON.stringify(editRecData)}`);
             props.saveRecord(editRecData,'Edit');
         }
         setEditIndex(-1);
@@ -45,14 +49,21 @@ export const EditTableComponent=(props)=> {
         props.delete(rec);  
      }
      const handleChanges =(evt)=>{
-        if(operationType === 'New'){
-            alert(`Handle Cahnges New`);
-            setRecData({...recData, [evt.target.id]:evt.target.value});
-        } 
-        if(operationType === 'Edit'){
-            alert(`Handle Cahnges Edit`);
+        if(editRecData === undefined) {
+           // alert(`New`);
+            setRecData({...recData, [evt.target.id]:evt.target.value});    
+        } else {
+          //  alert(`Edit`);
             setEditRecData({...editRecData, [evt.target.id]:evt.target.value});
         }
+        // if(operationType === 'New'){
+        //    alert(`Handle Cahnges New`);
+        //     setRecData({...recData, [evt.target.id]:evt.target.value});
+        // } 
+        // if(operationType === 'Edit'){
+        //    alert(`Handle Cahnges Edit`);
+        //     setEditRecData({...editRecData, [evt.target.id]:evt.target.value});
+        // }
      };
      const addNewRecord=()=>{
         //tableData.push({});
