@@ -22,7 +22,9 @@ function App() {
      })
   } ,[]);
 
-  const save=(rec)=>{
+  const save=(rec, operation)=>{
+    if(operation === 'Save'){
+      alert(`In Save New ${JSON.stringify(rec)}`);
      serv.postCategory(rec)
          .then(response=>{
            return response.data;
@@ -33,9 +35,32 @@ function App() {
          .catch(error=>{
            console.log(`Error occurred while saving record: ${error}`);
          }); 
+    }
+    if(operation === 'Edit'){
+      alert(`In Edit ${JSON.stringify(rec)}`);
+      serv.putCategory(rec.CategoryId,rec)
+          .then(response=>{
+            return response.data;
+          }).then(data=>{
+             setCategories(data);
+             window.location.reload(true);
+          })
+          .catch(error=>{
+            console.log(`Error occurred while saving record: ${error}`);
+          }); 
+     }
+
   };
   const deleteRecord=(rec)=>{
-    
+    alert(`Record to be deleted :${JSON.stringify(rec)}`);
+     serv.deleteCategory(rec).then(response=>{
+      return response.data;
+    }).then(data=>{
+       window.location.reload(true);
+    })
+    .catch(error=>{
+      console.log(`Error occurred while saving record: ${error}`);
+    }); 
   };
   if(categories === undefined || categories.length === 0){
     return (

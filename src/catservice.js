@@ -22,7 +22,7 @@ export class CategoryService {
         return response;
      }
       putCategory(id,cat){
-        const response =  axios.post(`${this.url}/${id}`, cat, {
+        const response =  axios.put(`${this.url}/${id}`, cat, {
             headers: {
                 'Content-Type':'application/json'
             }
